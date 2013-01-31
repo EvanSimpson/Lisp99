@@ -1,3 +1,5 @@
+(#%require (only racket/base random))
+
 ;P01 - Find the last box of a list.
 (define my-last
   (lambda (lst)
@@ -16,7 +18,7 @@
 ;P03 - Find the K'th element of a list.
 (define element-at
   (lambda (lst i)
-    (if (= i 0)
+    (if (= i 1)
         (car lst)
         (element-at (cdr lst) (- i 1)))))
 
@@ -179,8 +181,72 @@
   (lambda (lst i)
     (append (car (split lst (- i 1))) (cadr (split lst i)))))
 
-;P21 - Inset an element at a given position into a list.
+;P21 - Insert an element at a given position into a list.
 (define insert-at
   (lambda (new lst i)
     (append (car (split lst (- i 1))) (cons new (cadr (split lst (- i 1)))))))
+
+;P22 - Create a list containing all integers within a given range
+(define range
+  (lambda (i k)
+    (range-iter i k '())))
+(define range-iter
+  (lambda (i k new)
+    (cond ((= i k) (append new (list i)))
+          (else (range-iter (step i k) k (append new (list i)))))))
+
+;Helper process
+(define step
+  (lambda (i k)
+    (if (> i k)
+        (- i 1)
+        (+ i 1))))
+
+;P23 - Extract a given number of randomly selected elements from a list.
+(define rnd-select
+  (lambda (lst n)
+    (rnd-sel-iter n '() (+ 1 (random (- (length-of lst) 1))) lst)))
+(define rnd-sel-iter
+  (lambda (n new i lst)
+    (cond ((= n (length-of new)) new)
+          ((= 1 (length-of lst)) (append new lst))
+          (else (rnd-sel-iter n (append new (list (element-at lst i))) (+ 1 (random (- (length-of lst) 1) )) (remove-at lst i ))))))
+
+
+;P24 - Lotto: Draw N different random numbers from the set 1....M.
+(define lotto-select
+  (lambda (n m)
+    (rnd-select (range 1 m) n)))
+
+;P25 - Generate a random permutation of the elements of a list.
+(define rnd-permu
+  (lambda lst
+    (rnd-select (car lst) (length-of (car lst)))))
+
+;P26 - Generate the combinations of K distinct objects chosen from the N elements of a list.
+
+;P27 - Group the elements of a set into disjoint subsets.
+
+;P28 - Dorting a list of lists according to length of sublists.
+
+
+;Modulus
+(define %
+  (lambda (num denom)
+    (- num (* denom (quotient num denom)))))
+
+;P31 - Determine whether a given integer number is prime.
+(define is-prime
+  (lambda n
+    (cond ((= (car n) 1) #t)
+          ((= (car n) 2) #t)
+          (else (prime-iter (car n) 2)))))
+(define prime-iter
+  (lambda (n guess)
+    (cond ((= n guess) #t)
+          ((= 0 (% n guess)) #f)
+          (else (prime-iter n (+ 1 guess))))))
+
+
+  
 
