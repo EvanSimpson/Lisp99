@@ -133,17 +133,18 @@
 
 ;P14 - Duplicate the elements of a list.
 (define dupli
-  (lambda lst
-    (mult-iter (car lst) 2 '())))
+  (lambda (lst)
+    (mult-iter lst 2 '())))
 
 ;P15 - Replicate the elements of a list a given number of times.
 (define repli
-  (lambda (lst times)
-    (mult-iter lst times '())))
+  (lambda (lst amnt)
+    (mult-iter lst amnt '())))
+
 (define mult-iter
-  (lambda (lst times new)
+  (lambda (lst amnt new)
     (cond ((null? lst) new)
-          (else (mult-iter (cdr lst) times (append new (mult-sym times (car lst))))))))
+          (else (mult-iter (cdr lst) amnt (append new (mult-sym amnt (car lst))))))))
 
 ;P16 - Drop every N'th element from a list.
 (define drop 
@@ -239,7 +240,6 @@
 (define is-prime
   (lambda n
     (cond ((= (car n) 1) #t)
-          ((= (car n) 2) #t)
           (else (prime-iter (car n) 2)))))
 (define prime-iter
   (lambda (n guess)
@@ -247,6 +247,40 @@
           ((= 0 (% n guess)) #f)
           (else (prime-iter n (+ 1 guess))))))
 
+;P32 - Determine the greatest common divisor of two positiv integer numbers.
+(define (grcd one two)
+  (cond ((= 0 two) one)
+        (else (grcd two (% one two)))))
 
-  
+;P33 - Determine whether two postive integer numbers are coprme.
+(define (coprime? one two)
+  (if (= 1 (gcd one two))
+      #t
+      #f))
+
+;P34 - Calculate Euler's totient function phi(m).
+(define (totient-phi n)
+  (tot-iter n 1 0))
+(define (tot-iter n r count)
+  (cond ((= n r) count)
+        ((coprime? n r) (tot-iter n (+ 1 r) (+ 1 count)))
+        (else (tot-iter n (+ 1 r) count))))
+
+;P35 - Determine the prime factors of a given positive integer.
+(define (prime-factors n)
+  (prm-iter n 2 '()))
+(define (prm-iter n dv new)
+  (cond ((= 1 n) (reverse new))
+        ((= 0 (% n dv)) (prm-iter (/ n dv) 2 (cons dv new)))
+        (else (prm-iter n (+ 1 dv) new))))
+   
+;P36 - Determine the prime factors of a given positive integer.
+(define (prime-factors-mult n)
+  (encode-direct (prime-factors n)))
+
+
+;P37 - Calculate Euler's totent functioin ph(m) (improved).
+(define (phi-m n)
+  (phi-iter (prime-factors-mult n) 0))
+
 
