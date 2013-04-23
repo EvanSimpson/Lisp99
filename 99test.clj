@@ -24,37 +24,60 @@
 	(println "Test 6 passed")
 	(println "Test failed: is-palindrome"))
 
-(if (= '(1 2 3 4) (my-flatten '(1 (2 (3 4) 5))))
+(if (= '(1 2 3 4 5) (my-flatten '(1 (2 (3 4) 5)) ))
 	(println "Test 7 passed")
 	(println "Test failed: my-flatten"))
 
+(if (= '(1 2 3 4) (compress '(1 1 1 2 2 2 2 2 3 3 3 3 3 4 4 4 4)))
+	(println "Test 8 passed")
+	(println "Test failed: compress"))
+
+(if (= '((1 1 1 1) (2 2 2 2) (3) (4 4)) (pack '(1 1 1 1 2 2 2 2 3 4 4)))
+	(println "Test 9 passed")
+	(println "Test failed: pack"))
+
+(if (= '((4 1) (4 2) (1 3) (2 4)) (encode '(1 1 1 1 2 2 2 2 3 4 4)))
+	(println "Test 10 passed")
+	(println "Test failed: encode"))
+
+(if (= '(1 (4 2) 3 (2 4)) (encode-modified '(1 2 2 2 2 3 4 4)))
+	(println "Test 11 passed")
+	(println "Test failed: encode-modified"))
+
+(if (= '(1 2 2 2 2 3 4 4) (decode (encode-modified '(1 2 2 2 2 3 4 4))))
+	(println "Test 12 passed")
+	(println "Test failed: decode"))
+
+(if (= (encode-modified '(1 2 2 2 2 3 4 4)) (encode-direct '(1 2 2 2 2 3 4 4)))
+	(println "Test 13 passed")
+	(println "Test failed: encode-direct"))
 (comment
 (if ()
-	(println "Test  passed")
+	(println "Test 14 passed")
 	(println "Test failed: "))
 
 (if ()
-	(println "Test  passed")
+	(println "Test 15 passed")
 	(println "Test failed: "))
 
 (if ()
-	(println "Test  passed")
+	(println "Test 16 passed")
 	(println "Test failed: "))
 
 (if ()
-	(println "Test  passed")
+	(println "Test 17 passed")
 	(println "Test failed: "))
 
 (if ()
-	(println "Test  passed")
+	(println "Test 18 passed")
 	(println "Test failed: "))
 
 (if ()
-	(println "Test  passed")
+	(println "Test 19 passed")
 	(println "Test failed: "))
 
 (if ()
-	(println "Test  passed")
+	(println "Test 20 passed")
 	(println "Test failed: "))
 
 )
